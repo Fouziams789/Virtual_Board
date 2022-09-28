@@ -1,56 +1,66 @@
 import VirtualPainter as vp
-# hello_psg.py
-import io
 import os
 import PySimpleGUI as sg
 from datetime import datetime
 from session_sent import emailsender
 from PIL import Image
 import home as h
+import slide
+
 # using now() to get current time
 background_layout = [sg.theme_text_color(), sg.theme_background_color(), [sg.Image(r'image1.png')]]
 file_types = [("JPEG (*.jpg)", "*.jpg"),
               ("All files (*.*)", "*.*")]
 font = ("Arial", 20)
 font1 = ("Arial", 15)
+column1 = [[sg.Button("Slide Show")]]
 layout = [[sg.Image("Airo_Board.png")],
-          # [sg.Image("welcome.png")],
-          [sg.Text("-----------------------------------------------------------------------------", key='-text-', font=font)],
-          [sg.Text("                                             "), sg.Button("HOME", font = ("Arial", 12)), sg.Button("ABOUT", font = ("Arial", 12)), sg.Button("WORKS", font = ("Arial", 12))],
-          [sg.Text("-----------------------------------------------------------------------------", key='-text-', font=font)],
+          [sg.Text("-----------------------------------------------------------------------------", key='-text-',
+                   font=font)],
+          [sg.Text("                                             "), sg.Button("HOME", font=("Arial", 12)),
+           sg.Button("ABOUT", font=("Arial", 12)), sg.Button("WORKS", font=("Arial", 12))],
+          [sg.Text("-----------------------------------------------------------------------------", key='-text-',
+                   font=font)],
           [sg.Text('User Name', key='-text-', font=font1), sg.InputText()],
-          [sg.Text(size=(40,1), key='-OUTPUT-')],
+          [sg.Text(size=(40, 1), key='-OUTPUT-')],
           [sg.Text('Password ', key='-text-', font=font1), sg.InputText()],
           [sg.Text('_' * 80)],
           [sg.Text('Choose An Image to insert', size=(40, 1))],
-          [sg.Text('Your Folder', size=(15, 1), justification='right'), sg.InputText('Default Folder',  key="-FILE-"), sg.FileBrowse(file_types=file_types), sg.Button("Load Image")],
-          [sg.Text("---------------------------------------------------------------------------------------------------------------------------         ")],
+          [sg.Text('Your Folder', size=(15, 1), justification='right'), sg.InputText('Default Folder', key="-FILE-"),
+           sg.FileBrowse(file_types=file_types), sg.Button("Load Image")],
+          [sg.Text(
+              "---------------------------------------------------------------------------------------------------------------------------         ")],
           [sg.Frame(layout=[
-            [sg.CBox('Audio Recording', size=(10, 1)),
-             sg.CBox('Video Recording', default=True)]
-            ], title='Options For Recording', relief=sg.RELIEF_SUNKEN,
-            tooltip='Use these to set flags')],
-          [sg.Text("---------------------------------------------------------------------------------------------------------------------------         ")],
-          [sg.Button("Click here to Open Virtual Board", font = ("Arial", 15))]
+              [sg.CBox('Audio Recording', size=(10, 1)),
+               sg.CBox('Video Recording', default=True)]
+          ], title='Options For Recording', relief=sg.RELIEF_SUNKEN,
+              tooltip='Use these to set flags'), sg.Col(column1)],
+          [sg.Text(
+              "---------------------------------------------------------------------------------------------------------------------------         ")],
+          [sg.Button("Click here to Open Virtual Board", font=("Arial", 15))]
           ]
 layout2 = [[sg.Text("                                      Thank you using Airoboard ")],
 
-          [sg.Text("---------------------------------------------------------------------------------------------------------------------------         ")],
-          [sg.Text("                                         Send Your Drawing To Your Email")],
-          [sg.Text("---------------------------------------------------------------------------------------------------------------------------         ")],
-          [sg.Text("Enter Your Email Address to send Screen time and Drawing")],
-          [sg.Text('Email : '), sg.InputText()],
-          [sg.Text(size=(40,1), key='-OUTPUT-')],
-          [sg.Button("Send Email")],
-          [sg.Text("---------------------------------------------------------------------------------------------------------------------------         ")],
-          [sg.Text("                                            Send Your Feedback"                               )],
-          [sg.Text("                                                                                                                                                                        ")],
+           [sg.Text(
+               "---------------------------------------------------------------------------------------------------------------------------         ")],
+           [sg.Text("                                         Send Your Drawing To Your Email")],
+           [sg.Text(
+               "---------------------------------------------------------------------------------------------------------------------------         ")],
+           [sg.Text("Enter Your Email Address to send Screen time and Drawing")],
+           [sg.Text('Email : '), sg.InputText()],
+           [sg.Text(size=(40, 1), key='-OUTPUT-')],
+           [sg.Button("Send Email")],
+           [sg.Text(
+               "---------------------------------------------------------------------------------------------------------------------------         ")],
+           [sg.Text("                                            Send Your Feedback")],
+           [sg.Text(
+               "                                                                                                                                                                        ")],
 
-          [sg.Multiline(size=(30, 5), key='textbox')],
-          [sg.Text(
-              "                                                                                                                                                                        ")],
-          [sg.Button("Send Feedback")]
-          ]
+           [sg.Multiline(size=(30, 5), key='textbox')],
+           [sg.Text(
+               "                                                                                                                                                                        ")],
+           [sg.Button("Send Feedback")]
+           ]
 
 # Create the window
 window = sg.Window("Virtual Paint", layout)
@@ -99,21 +109,6 @@ while True:
     if event == "Send Email":
         if values[0]:
             emailsender("SS1.jpg")
-
+    if event == "Slide Show":
+        slide.playslide()
 window.close()
-
-# import gtts
-# from playsound import playsound
-#
-#
-# tts = gtts.gTTS("Hello world Fouzia")
-# # save the audio file
-# tts.save("hello.mp3")
-# # play the audio file
-# playsound("hello.mp3")
-# # in spanish
-# tts = gtts.gTTS("Hi Fouzia", lang="es")
-# tts.save("hola.mp3")
-# playsound("hola.mp3")
-# # all available languages along with their IETF tag
-# print(gtts.lang.tts_langs())

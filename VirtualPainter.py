@@ -1,5 +1,4 @@
 import cv2
-import time
 import HandTrackingModule as htm
 import numpy as np
 import os
