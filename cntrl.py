@@ -6,6 +6,7 @@ import PySimpleGUI as sg
 from datetime import datetime
 from session_sent import emailsender
 from PIL import Image
+import home as h
 # using now() to get current time
 background_layout = [sg.theme_text_color(), sg.theme_background_color(), [sg.Image(r'image1.png')]]
 file_types = [("JPEG (*.jpg)", "*.jpg"),
@@ -50,7 +51,7 @@ layout2 = [[sg.Text("                                      Thank you using Airob
               "                                                                                                                                                                        ")],
           [sg.Button("Send Feedback")]
           ]
-layout3 = [[sg.Image("Home.png")]]
+
 # Create the window
 window = sg.Window("Virtual Paint", layout)
 
@@ -62,8 +63,10 @@ while True:
     print(event)
     if event == "HOME":
         print(values)
-        window = sg.Window("Home", layout3)
+        h.layout3()
 
+    elif event == sg.WIN_CLOSED:
+        break
     if event == "Load Image":
         filename = values["-FILE-"]
         if os.path.exists(filename):
@@ -74,9 +77,9 @@ while True:
             # window["-IMAGE-"].update(data=bio.getvalue())
     if event == "Click here to Open Virtual Board":
         print(values)
-        if values[0]:
-            if values[1] == "root":
-                name = values[0]
+        if values[1]:
+            if values[2] == "root":
+                name = values[1]
                 now = datetime.now()
                 session_start_time = now.strftime('Date: %d/%Y/%m Time: %I:%M:%S')
                 vp.airoboard(session_start_time, name, image)
@@ -87,7 +90,8 @@ while True:
         else:
             window['-OUTPUT-'].update("Please enter the User Name!", text_color='red')
         if values[3]:
-            rec_audios()
+            # rec_audios()
+            pass
         if values[4]:
             pass
     elif event == sg.WIN_CLOSED:

@@ -42,8 +42,26 @@ def airoboard(session_start_time, name, image):
     cap.set(4, 720)  # height
 
     detector = htm.handDetector(detectionCon=0.85, maxHands=1)  # making object
+    screen_size = pyautogui.size()
+    # initialize the object
+    video = cv2.VideoWriter('Recording.avi',
+                           cv2.VideoWriter_fourcc(*'MJPG'),
+                           20, screen_size)
 
+    print("Recording.....")
     while True:
+
+        # click screen shot
+        screen_shot_img = pyautogui.screenshot()
+
+        # convert into array
+        frame = np.array(screen_shot_img)
+
+        # change from BGR to RGB
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        # write frame
+        video.write(frame)
 
         # 1. Import image
         success, img = cap.read()
@@ -78,6 +96,7 @@ def airoboard(session_start_time, name, image):
                         # writing it to the disk using opencv
                         # cv2.imwrite("image1.jpg", image)
                         t = datetime.now()
+                        t = str(t).replace(" ", "")
                         im.save("{}/{}.jpg".format(uu_id, t))
                         # from PIL import ImageGrab
                         # ss_region = (300, 300, 600, 600)
@@ -168,11 +187,14 @@ def airoboard(session_start_time, name, image):
 
         # setting the header image
         img[0:128, 0:1280] = header
+        # ith = cv2.resize(ith, (300, 200))
         ith = cv2.resize(ith, (300, 200))
+        ith = ith / 255.0
+        ith = np.reshape(ith, (1, 300, 200, 1))
         # print(header)
         img[130:330, 0:300] = ith # on our frame we are setting our JPG image acc to H,W of jpg images
-        cv2.putText(img, str(name),(50, 50), cv2.FONT_HERSHEY_PLAIN , 1,(0, 0, 255), 2)
-        cv2.putText(img, "Session_Started: "+str(name) + " "+str(session_start_time),(50, 700), cv2.FONT_HERSHEY_PLAIN, 1,(0, 0, 255), 1)
+        cv2.putText(img, str(name), (50, 50), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 2)
+        cv2.putText(img, "Session_Started: "+str(name) + " "+str(session_start_time), (50, 700), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 1)
         # x, y, w, h = 0, 0, 175, 75
         # cv2.rectangle(img, (100, 70), (x + w, y + h), (0, 0, 0), -1)
         # cv2.rectangle(img, pt1=(200, 300), pt2=(100, 100), color=(255, 255, 0), thickness=-1)
@@ -185,3 +207,4 @@ def airoboard(session_start_time, name, image):
         if cv2.getWindowProperty("Image", cv2.WND_PROP_VISIBLE) < 1:
             break
     cv2.destroyAllWindows()
+    video.release()
