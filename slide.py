@@ -10,7 +10,7 @@ def playslide():
     folderPath = "Presentation"
 
     # Camera Setup
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(-2)
     cap.set(3, width)
     cap.set(4, height)
 
@@ -31,7 +31,7 @@ def playslide():
     hs, ws = int(120 * 1), int(213 * 1)  # width and height of small image
 
     # Get list of presentation images
-    pathImages = sorted(os.listdir(folderPath), key=len)
+    pathImages = sorted(os.listdir(folderPath))
     print(pathImages)
 
     while True:
@@ -118,6 +118,7 @@ def playslide():
         cv2.imshow("Slides", imgCurrent)
         cv2.imshow("Image", img)
 
-        key = cv2.waitKey(1)
-        if key == ord('q'):
+        cv2.waitKey(1)
+        if cv2.getWindowProperty("Image", cv2.WND_PROP_VISIBLE) < 1:
             break
+    cv2.destroyWindow("Image")

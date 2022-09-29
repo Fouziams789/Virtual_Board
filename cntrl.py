@@ -13,7 +13,7 @@ file_types = [("JPEG (*.jpg)", "*.jpg"),
               ("All files (*.*)", "*.*")]
 font = ("Arial", 20)
 font1 = ("Arial", 15)
-column1 = [[sg.Button("Slide Show")]]
+column1 = []
 layout = [[sg.Image("Airo_Board.png")],
           [sg.Text("-----------------------------------------------------------------------------", key='-text-',
                    font=font)],
@@ -37,7 +37,7 @@ layout = [[sg.Image("Airo_Board.png")],
               tooltip='Use these to set flags'), sg.Col(column1)],
           [sg.Text(
               "---------------------------------------------------------------------------------------------------------------------------         ")],
-          [sg.Button("Click here to Open Virtual Board", font=("Arial", 15))]
+          [sg.Button("Virtual Board", font=("Arial", 15)), sg.Button("Slide Show", font = ("Arial", 15))]
           ]
 layout2 = [[sg.Text("                                      Thank you using Airoboard ")],
 
@@ -64,6 +64,7 @@ layout2 = [[sg.Text("                                      Thank you using Airob
 
 # Create the window
 window = sg.Window("Virtual Paint", layout)
+image = 0
 
 # Create an event loop
 while True:
@@ -85,7 +86,7 @@ while True:
             # bio = io.BytesIO()
             # image.save(bio, format="PNG")
             # window["-IMAGE-"].update(data=bio.getvalue())
-    if event == "Click here to Open Virtual Board":
+    if event == "Virtual Board":
         print(values)
         if values[1]:
             if values[2] == "root":
@@ -94,7 +95,8 @@ while True:
                 session_start_time = now.strftime('Date: %d/%Y/%m Time: %I:%M:%S')
                 vp.airoboard(session_start_time, name, image)
                 window.close()
-                window = sg.Window("Experience", layout2)
+                # window = sg.Window("Virtual Paint", layout)
+
             else:
                 window['-OUTPUT-'].update("Wrong Password !", text_color='red')
         else:
@@ -105,10 +107,22 @@ while True:
         if values[4]:
             pass
     elif event == sg.WIN_CLOSED:
-        break
+        window = sg.Window("Experience", layout2)
     if event == "Send Email":
         if values[0]:
             emailsender("SS1.jpg")
     if event == "Slide Show":
-        slide.playslide()
+        if values[1]:
+            if values[2] == "root":
+                name = values[1]
+                now = datetime.now()
+                session_start_time = now.strftime('Date: %d/%Y/%m Time: %I:%M:%S')
+                slide.playslide()
+                window.close()
+                # window = sg.Window("Virtual Paint", layout)
+            else:
+                window['-OUTPUT-'].update("Wrong Password !", text_color='red')
+        else:
+            window['-OUTPUT-'].update("Please enter the User Name!", text_color='red')
+
 window.close()

@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="12f6d49b-ac44-4623-b795-02d126066c2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/1.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VirtualPainter.py" beforeDir="false" afterPath="$PROJECT_DIR$/VirtualPainter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cntrl.py" beforeDir="false" afterPath="$PROJECT_DIR$/cntrl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slide.py" beforeDir="false" afterPath="$PROJECT_DIR$/slide.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/user/Desktop/PROJECT_VirtualBoard/Virtual_Board"
+    "last_opened_file_path": "/home/qburst/Videos/Virtual_Board"
   },
   "keyToStringList": {
     "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [

@@ -11,6 +11,8 @@ import numpy
 
 def airoboard(session_start_time, name, image):
 
+
+
     cnt = 0
     flag = 0
     uu_id = uuid.uuid1()
@@ -28,15 +30,11 @@ def airoboard(session_start_time, name, image):
     folderPath = "Header"
     myList = os.listdir(folderPath)  # getting all the images used in code
     # print(myList)
-    open_cv_image = numpy.array(image)
-    # Convert RGB to BGR
-    ith = open_cv_image[:, :, ::-1].copy()
-    print(ith)
     for imPath in myList:  # reading all the images from the folder
         image = cv2.imread(f'{folderPath}/{imPath}')
         overlayList.append(image)  # inserting images one by one in the overlayList
     header = overlayList[0]  # storing 1st image
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(-2)
     cap.set(3, 1280)  # width
     cap.set(4, 720)  # height
 
@@ -186,12 +184,11 @@ def airoboard(session_start_time, name, image):
 
         # setting the header image
         img[0:128, 0:1280] = header
-        # ith = cv2.resize(ith, (300, 200))
-        ith = cv2.resize(ith, (300, 200))
-        ith = ith / 255.0
-        ith = np.reshape(ith, (1, 300, 200, 1))
-        # print(header)
-        img[130:330, 0:300] = ith # on our frame we are setting our JPG image acc to H,W of jpg images
+        if image.all() != 0:
+            open_cv_image = numpy.array(image)
+            ith = open_cv_image[:, :, ::-1].copy()
+            ith = cv2.resize(ith, (300, 200))
+            img[130:330, 0:300] = ith # on our frame we are setting our JPG image acc to H,W of jpg images
         cv2.putText(img, str(name), (50, 50), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 2)
         cv2.putText(img, "Session_Started: "+str(name) + " "+str(session_start_time), (50, 700), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 1)
         # x, y, w, h = 0, 0, 175, 75
@@ -207,3 +204,4 @@ def airoboard(session_start_time, name, image):
             break
     cv2.destroyAllWindows()
     video.release()
+
